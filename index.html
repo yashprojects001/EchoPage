@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EchoPage — A Living Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg1: #0f2027;
+      --bg2: #203a43;
+      --bg3: #2c5364;
+      --accent: #00ffd5;
+      --highlight: #ffe066;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at var(--x,50%) var(--y,50%), var(--bg3), var(--bg1));
+      color: white;
+      overflow-x: hidden;
+      transition: background 0.2s linear;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #00ffd5, #00c3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .box:hover {
+      transform: translateY(-4px);
+      transition: 0.3s ease;
+    }
+
+    mark {
+      background: var(--highlight);
+      padding: 0.2em 0.4em;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+
+    /* Floating dots */
+    .dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+      pointer-events: none;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-10vh);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>EchoPage</h1>
+  <p>A webpage that reacts, remembers, and responds</p>
+</header>
+
+<main id="content">
+  <div class="box">
+    <h2>🧠 This page is listening</h2>
+    <p>
+      Move your mouse.  
+      Type something.  
+      Select any text and press <b>H</b>.  
+      Refresh the page — your highlights stay.
+    </p>
+  </div>
+
+  <div class="box">
+    <h2>✨ Why this feels different</h2>
+    <p>
+      Most webpages are static.  
+      This one reacts to <i>you</i>.
+      It remembers what mattered to you and visually adapts.
+    </p>
+  </div>
+
+  <div class="box">
+    <h2>📌 Try this</h2>
+    <p>
+      Highlight any word in this paragraph and press <b>H</b>.  
+      Close the tab.  
+      Open it again.  
+      Still highlighted — because memory exists.
+    </p>
+  </div>
+</main>
+
+<footer>
+  Built with pure HTML, CSS & JS — single file magic ✨
+</footer>
+
+<script>
+  /* Dynamic background */
+  document.addEventListener("mousemove", e => {
+    document.body.style.setProperty("--x", e.clientX + "px");
+    document.body.style.setProperty("--y", e.clientY + "px");
+  });
+
+  /* Floating dots */
+  setInterval(() => {
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    dot.style.left = Math.random() * 100 + "vw";
+    dot.style.animationDuration = 4 + Math.random() * 4 + "s";
+    document.body.appendChild(dot);
+
+    setTimeout(() => dot.remove(), 8000);
+  }, 400);
+
+  /* Persistent highlights */
+  function saveContent() {
+    localStorage.setItem("echoContent", document.getElementById("content").innerHTML);
+  }
+
+  function loadContent() {
+    const saved = localStorage.getItem("echoContent");
+    if (saved) document.getElementById("content").innerHTML = saved;
+  }
+
+  loadContent();
+
+  document.addEventListener("keydown", e => {
+    if (e.key.toLowerCase() === "h") {
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+
+      const range = selection.getRangeAt(0);
+      if (range.collapsed) return;
+
+      const mark = document.createElement("mark");
+      range.surroundContents(mark);
+      selection.removeAllRanges();
+      saveContent();
+    }
+  });
+</script>
+
+</body>
+</html>
