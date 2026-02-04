@@ -1,195 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EchoPage — A Living Web</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>EchoPage+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --bg1: #0f2027;
-      --bg2: #203a43;
-      --bg3: #2c5364;
-      --accent: #00ffd5;
-      --highlight: #ffe066;
-    }
+<style>
+:root {
+  --bg: #0f2027;
+  --card: rgba(255,255,255,0.08);
+  --text: #ffffff;
+  --accent: #00ffd5;
+  --highlight: #ffe066;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", system-ui, sans-serif;
-    }
+body.light {
+  --bg: #f4f6f8;
+  --card: rgba(0,0,0,0.06);
+  --text: #111;
+  --accent: #0077ff;
+}
 
-    body {
-      min-height: 100vh;
-      background: radial-gradient(circle at var(--x,50%) var(--y,50%), var(--bg3), var(--bg1));
-      color: white;
-      overflow-x: hidden;
-      transition: background 0.2s linear;
-    }
+* {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
 
-    header {
-      padding: 2rem;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at var(--x,50%) var(--y,50%), var(--accent), var(--bg));
+  color: var(--text);
+  transition: background 0.4s, color 0.4s;
+}
 
-    header h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #00ffd5, #00c3ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+header {
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+}
 
-    header p {
-      opacity: 0.8;
-      margin-top: 0.5rem;
-    }
+h1 {
+  font-size: 3rem;
+  background: linear-gradient(90deg, var(--accent), #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-      line-height: 1.8;
-      font-size: 1.1rem;
-    }
+#moodBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--card);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 20px;
+  color: var(--text);
+  cursor: pointer;
+}
 
-    .box {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
 
-    .box:hover {
-      transform: translateY(-4px);
-      transition: 0.3s ease;
-    }
+.box {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
 
-    mark {
-      background: var(--highlight);
-      padding: 0.2em 0.4em;
-      border-radius: 6px;
-    }
+mark {
+  background: var(--highlight);
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      opacity: 0.6;
-      font-size: 0.9rem;
-    }
+footer {
+  text-align: center;
+  opacity: 0.6;
+  padding-bottom: 1rem;
+}
 
-    /* Floating dots */
-    .dot {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.6;
-      pointer-events: none;
-      animation: float 6s linear infinite;
-    }
+/* Floating intelligence dots */
+.dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: float 7s linear infinite;
+}
 
-    @keyframes float {
-      from {
-        transform: translateY(100vh);
-      }
-      to {
-        transform: translateY(-10vh);
-      }
-    }
-  </style>
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+</style>
 </head>
-<body>
 
+<body>
 <header>
-  <h1>EchoPage</h1>
-  <p>A webpage that reacts, remembers, and responds</p>
+  <h1>EchoPage+</h1>
+  <p id="aiMessage">Observing your interaction…</p>
+  <button id="moodBtn">🌙 Toggle Mood</button>
 </header>
 
 <main id="content">
   <div class="box">
-    <h2>🧠 This page is listening</h2>
+    <h2>🧠 This page adapts</h2>
     <p>
-      Move your mouse.  
-      Type something.  
-      Select any text and press <b>H</b>.  
-      Refresh the page — your highlights stay.
+      If you explore slowly, it assumes you're reading.
+      If you move fast, it assumes curiosity.
+      No AI model — just logic.
     </p>
   </div>
 
   <div class="box">
-    <h2>✨ Why this feels different</h2>
+    <h2>✨ Persistent highlights</h2>
     <p>
-      Most webpages are static.  
-      This one reacts to <i>you</i>.
-      It remembers what mattered to you and visually adapts.
+      Select text and press <b>H</b>.
+      Refresh.
+      The page remembers what mattered.
     </p>
   </div>
 
   <div class="box">
-    <h2>📌 Try this</h2>
+    <h2>🔥 Mood aware UI</h2>
     <p>
-      Highlight any word in this paragraph and press <b>H</b>.  
-      Close the tab.  
-      Open it again.  
-      Still highlighted — because memory exists.
+      The page automatically adapts to system theme,
+      but you can override it manually.
     </p>
   </div>
 </main>
 
 <footer>
-  Built with pure HTML, CSS & JS — single file magic ✨
+  Single file · Zero libraries · Maximum personality
 </footer>
 
 <script>
-  /* Dynamic background */
-  document.addEventListener("mousemove", e => {
-    document.body.style.setProperty("--x", e.clientX + "px");
-    document.body.style.setProperty("--y", e.clientY + "px");
-  });
+/* ===== Mood System ===== */
+const body = document.body;
+const btn = document.getElementById("moodBtn");
 
-  /* Floating dots */
-  setInterval(() => {
-    const dot = document.createElement("div");
-    dot.className = "dot";
-    dot.style.left = Math.random() * 100 + "vw";
-    dot.style.animationDuration = 4 + Math.random() * 4 + "s";
-    document.body.appendChild(dot);
+function applyMood(mode) {
+  body.classList.toggle("light", mode === "light");
+  localStorage.setItem("mood", mode);
+}
 
-    setTimeout(() => dot.remove(), 8000);
-  }, 400);
+const savedMood = localStorage.getItem("mood");
+if (savedMood) {
+  applyMood(savedMood);
+} else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+  applyMood("light");
+}
 
-  /* Persistent highlights */
-  function saveContent() {
-    localStorage.setItem("echoContent", document.getElementById("content").innerHTML);
+btn.onclick = () => {
+  applyMood(body.classList.contains("light") ? "dark" : "light");
+};
+
+/* ===== AI-STYLE BEHAVIOR (NO AI) ===== */
+let moves = 0;
+let lastMove = Date.now();
+const msg = document.getElementById("aiMessage");
+
+document.addEventListener("mousemove", e => {
+  document.body.style.setProperty("--x", e.clientX + "px");
+  document.body.style.setProperty("--y", e.clientY + "px");
+
+  moves++;
+  const now = Date.now();
+
+  if (now - lastMove > 1500) {
+    msg.textContent = "You seem focused. Probably reading 👀";
+  } else if (moves > 100) {
+    msg.textContent = "High curiosity detected 🔍";
   }
 
-  function loadContent() {
-    const saved = localStorage.getItem("echoContent");
-    if (saved) document.getElementById("content").innerHTML = saved;
+  lastMove = now;
+});
+
+/* ===== Floating Dots ===== */
+setInterval(() => {
+  const d = document.createElement("div");
+  d.className = "dot";
+  d.style.left = Math.random() * 100 + "vw";
+  d.style.animationDuration = 5 + Math.random() * 4 + "s";
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 9000);
+}, 500);
+
+/* ===== Persistent Highlight System ===== */
+const content = document.getElementById("content");
+
+function save() {
+  localStorage.setItem("content", content.innerHTML);
+}
+
+const saved = localStorage.getItem("content");
+if (saved) content.innerHTML = saved;
+
+document.addEventListener("keydown", e => {
+  if (e.key.toLowerCase() === "h") {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    if (range.collapsed) return;
+
+    const mark = document.createElement("mark");
+    range.surroundContents(mark);
+    sel.removeAllRanges();
+    save();
   }
-
-  loadContent();
-
-  document.addEventListener("keydown", e => {
-    if (e.key.toLowerCase() === "h") {
-      const selection = window.getSelection();
-      if (!selection.rangeCount) return;
-
-      const range = selection.getRangeAt(0);
-      if (range.collapsed) return;
-
-      const mark = document.createElement("mark");
-      range.surroundContents(mark);
-      selection.removeAllRanges();
-      saveContent();
-    }
-  });
+});
 </script>
-
 </body>
 </html>
